@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: my-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: learning_pg
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  pgadmin:
+    image: elestio/pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${ADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: 8080
+    ports:
+      - "7071:8080"
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+volumes:
+  pgdata:
